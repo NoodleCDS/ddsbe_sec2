@@ -17,9 +17,17 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/users', 'UserController@index'); // get all users
-$router->post('/users', 'UserController@add'); // create new user
-$router->get('/users/{id}', 'UserController@show'); // get user by id
-$router->put('/users/{id}', 'UserController@update'); // update user
-$router->patch('/users/{id}', 'UserController@update'); // update user
-$router->delete('/users/{id}', 'UserController@delete'); // delete 
+$router->group(['prefix' => 'api'], function () use ($router) {
+    $router->get('/users',['uses' => 'UserController@getUsers']);
+});
+
+$router->get('/users', 'UserController@index');          
+$router->post('/users', 'UserController@addUser');         
+$router->get('/users/{id}', 'UserController@show');          
+$router->put('/users/{id}', 'UserController@update');      
+$router->patch('/users/{id}', 'UserController@update');      
+$router->delete('/users/{id}', 'UserController@delete');   
+
+$router->get('/usersjob', 'UserJobController@index');
+$router->get('/userjob/{id}', 'UserJobController@show');  
+
